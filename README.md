@@ -1,41 +1,38 @@
 ## Description
 
-A portfolio project built with NestJS framework, showcasing various features and best practices for building scalable and maintainable server-side applications.
+A portfolio project API built with NestJS framework.
 
-## Project setup
+## Quick start:
 
-```bash
-$ npm install
-```
-
-## Compile and run the project
+1. Clone repo into a folder
+2. Navigate to the folder and run:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+`npm install`
 ```
 
-## Run tests
+3. Create `.env` from `.env.example` and set creds
+4. Build migrations: `npm run migration:run` (or use TypeORM CLI)
+5. `npm run start:dev`
+6. Open `http://localhost:3000/doc`- swagger documentation API
+7. Use Postman or similar tool to test API and open `http://localhost:3000/api`
 
-```bash
-# unit tests
-$ npm run test
+## Features
 
-# e2e tests
-$ npm run test:e2e
+- User registration and authentication (JWT)
+- Image upload and management
+- Commenting system for images
+- Pagination for images and comments
+- Input validation and error handling
 
-# test coverage
-$ npm run test:cov
-```
+## Technologies Used
 
-## Deployment
+- NestJS
+- TypeORM
+- PostgreSQL
+- Multer (for file uploads)
+- Swagger (for API documentation)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.
