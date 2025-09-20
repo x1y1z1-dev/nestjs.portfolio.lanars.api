@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/commo
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Image } from 'src/image/entities/image.entity';
-import { Portfolio } from 'src/portfolio/entities/portfolio.entity';
+import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
 import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class ImagesService {
 		@InjectRepository(Image) private repo: Repository<Image>,
 		@InjectRepository(Portfolio) private portfolioRepo: Repository<Portfolio>,
 		@InjectRepository(User) private userRepo: Repository<User>,
-	) {}
+	) { }
 
 	async upload(portfolioId: string, filename: string, dto: any, userId: string) {
 		const p = await this.portfolioRepo.findOne({ where: { id: portfolioId }, relations: ['owner'] });

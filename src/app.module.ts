@@ -6,7 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ImagesModule } from './image/image.module';
+import { PortfoliosModule } from './portfolios/portfolios.module';
+// import { ImagesModule } from './image/image.module';
 
 @Module({
 	imports: [
@@ -31,11 +32,11 @@ import { ImagesModule } from './image/image.module';
 		}),
 		AuthModule,
 		UsersModule,
-		ImagesModule,
-		// PortfolioModule,
+		PortfoliosModule,
+		// ImagesModule,
 		// CommentModule,
 	],
 	providers: [AppService],
 	controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule { }

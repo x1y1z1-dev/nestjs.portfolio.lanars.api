@@ -1,5 +1,5 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { ServerConfig, ServerConfigName } from './configs/server.config';
@@ -15,6 +15,7 @@ async function bootstrap() {
 	const serverConfig = configService.getOrThrow<ServerConfig>(ServerConfigName);
 
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); // to use @Exclude() in entities
 	app.useGlobalFilters(new AllExceptionsFilter());
 	app.setGlobalPrefix('api');
 	app.enableCors();
@@ -36,3 +37,7 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+//TODO: add Logger
+//TODO: trotling
+//google for secure api

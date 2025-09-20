@@ -11,7 +11,7 @@ export class Portfolio {
 	name: string;
 
 	@Column({ nullable: true, type: 'text' })
-	description?: string;
+	description: string;
 
 	@ManyToOne(() => User, user => user.portfolios, { onDelete: 'CASCADE' })
 	owner: User;
