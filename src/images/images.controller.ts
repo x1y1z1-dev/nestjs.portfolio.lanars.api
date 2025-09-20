@@ -16,7 +16,7 @@ import { ImagesService } from './images.service';
 import { ConfigService } from '@nestjs/config';
 import type { UserRequest } from 'src/common/types/general.type';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
-import { ApiBody, ApiConsumes, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiResponse } from '@nestjs/swagger';
 
 @Controller('images')
 export class ImagesController {
@@ -28,6 +28,7 @@ export class ImagesController {
 	@ApiConsumes('multipart/form-data')
 	@UseGuards(JwtAuthGuard)
 	@Post(':id')
+	@ApiBearerAuth()
 	@ApiBody({
 		description: 'Upload an image file (jpg, jpeg, png) max 5MB',
 		schema: {
@@ -59,7 +60,6 @@ export class ImagesController {
 		@Body('description') description: string,
 		@GetUser() user: UserRequest,
 	): Promise<{ message: string }> {
-		console.log(id, file.filename, name, description, user.id);
 		await this.service.upload(id, file.filename, name, description, user.id);
 
 		return {
@@ -69,14 +69,15 @@ export class ImagesController {
 
 	@UseGuards(JwtAuthGuard)
 	@Delete('/:id')
+	@ApiBearerAuth()
 	@ApiResponse({ status: 200, description: 'Deleted' })
 	@ApiResponse({ status: 403, description: 'Not allowed' })
 	@ApiResponse({ status: 404, description: 'Image not found' })
 	async deleteImage(@Param('id') id: string, @GetUser() user: UserRequest): Promise<{ message: string }> {
 		await this.service.delete(id, user.id);
-		return { message: 'Deleted' };
+
+		return {
+			message: 'Image deleted',
+		};
 	}
 }
-
-//TODO: check new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it
-//TODO: image DTO fix

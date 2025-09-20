@@ -32,9 +32,7 @@ export class ImagesService {
 		return `${name}_${uniqueSuffix}${ext}`;
 	}
 	async upload(portfolioId: string, filename: string, name: string, description: string, userId: string) {
-		console.log(portfolioId);
 		const portfolio = await this.portfolioRepo.findOne({ where: { id: portfolioId }, relations: ['owner'] });
-		console.log(1234);
 
 		if (!portfolio) throw new NotFoundException('Portfolio not found');
 
@@ -66,10 +64,8 @@ export class ImagesService {
 
 		try {
 			await unlink(filePath);
-			console.log(`File deleted: ${filePath}`);
-		} catch (error: any) {
-			const message = error instanceof Error ? error.message : String(error);
-			console.warn(`File not found or cannot be deleted: ${filePath}`, message);
+		} catch {
+			throw new ForbiddenException('File not found or cannot be deleted');
 		}
 
 		await this.repo.remove(img);

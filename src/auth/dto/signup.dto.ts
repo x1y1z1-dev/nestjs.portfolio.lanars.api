@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, Matches } from 'class-validator';
+import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class SignupDto {
 	@ApiProperty({
@@ -23,5 +23,7 @@ export class SignupDto {
 		example: 'John Doe',
 	})
 	@IsString()
+	@MinLength(3, { message: 'The name must be at least 3 characters long.' })
+	@MaxLength(20, { message: 'The name must be no longer than 20 characters' })
 	name: string;
 }

@@ -40,4 +40,22 @@ bootstrap();
 
 //TODO: add Logger
 //TODO: trotling
-//google for secure api
+
+//TODO: google for secure api
+
+//TODO: check how ro impove code, doc, response
+
+//TODO: check if need
+
+//TODO: Add /api/portfolios/create? /api/portfolios/delete?
+//TODO: розобратся с { id: 'cee6563a-6fb3-4e90-bdc7-5c8f17e97b3c', username: undefined }
+//TODO: доробити свагер
+//TODO: check all response ts contollers and services and other help functions conf, filter, fecorators
+//TODO: improve swager documentation, check status codes and messages
+//TODO: check min max values for fields strings if empty and others
+//TODO: ADD seed fake data
+//TODO: add test
+//TODO: check index DB
+
+//TODO: check new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it
+//TODO: image DTO fix
