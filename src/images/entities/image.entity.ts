@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Comment } from 'src/comment/entities/comment.entity';
+import { Comment } from 'src/comments/entities/comments.entity';
 
 @Entity()
 export class Image {
@@ -12,18 +12,18 @@ export class Image {
 	name: string;
 
 	@Column({ nullable: true, type: 'text' })
-	description?: string;
+	description: string;
 
 	@Column()
 	filePath: string;
 
-	@ManyToOne(() => Portfolio, p => p.images, { onDelete: 'CASCADE' })
+	@ManyToOne(() => Portfolio, portfolio => portfolio.images, { onDelete: 'CASCADE' })
 	portfolio: Portfolio;
 
-	@ManyToOne(() => User, u => u.images, { onDelete: 'SET NULL' })
+	@ManyToOne(() => User, user => user.images, { onDelete: 'SET NULL' })
 	uploader: User;
 
-	@OneToMany(() => Comment, c => c.image, { cascade: true })
+	@OneToMany(() => Comment, comment => comment.image, { cascade: true })
 	comments: Comment[];
 
 	@CreateDateColumn()

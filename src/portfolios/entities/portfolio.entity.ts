@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { Image } from 'src/image/entities/image.entity';
+import { Image } from 'src/images/entities/image.entity';
 
 @Entity()
 export class Portfolio {
@@ -16,7 +16,7 @@ export class Portfolio {
 	@ManyToOne(() => User, user => user.portfolios, { onDelete: 'CASCADE' })
 	owner: User;
 
-	@OneToMany(() => Image, img => img.portfolio, { cascade: true })
+	@OneToMany(() => Image, image => image.portfolio, { cascade: true })
 	images: Image[];
 
 	@CreateDateColumn()

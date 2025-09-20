@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import serverConfig from './configs/server.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
-// import { ImagesModule } from './image/image.module';
+import { ImagesModule } from './images/images.module';
+import diskConfig from './configs/disk.config';
+import serverConfig from './configs/server.config';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			load: [serverConfig],
+			load: [serverConfig, diskConfig],
 		}),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
@@ -33,7 +34,7 @@ import { PortfoliosModule } from './portfolios/portfolios.module';
 		AuthModule,
 		UsersModule,
 		PortfoliosModule,
-		// ImagesModule,
+		ImagesModule,
 		// CommentModule,
 	],
 	providers: [AppService],

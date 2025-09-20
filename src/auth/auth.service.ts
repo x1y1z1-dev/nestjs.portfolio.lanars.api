@@ -12,7 +12,7 @@ export class AuthService {
 		private configService: ConfigService,
 		@InjectRepository(User) private userRepo: Repository<User>,
 		private jwtService: JwtService,
-	) {}
+	) { }
 
 	async signup(email: string, password: string, name: string): Promise<User> {
 		const existing = await this.userRepo.findOne({ where: { email } });
@@ -46,7 +46,7 @@ export class AuthService {
 		);
 	}
 
-	async generateRefreshToken(user: User) {
+	async generateRefreshToken(user: User): Promise<string> {
 		const refreshToken = await this.jwtService.signAsync(
 			{ sub: user.id },
 			{
@@ -60,7 +60,7 @@ export class AuthService {
 		return refreshToken;
 	}
 
-	async invalidateRefreshToken(userId: string) {
+	async invalidateRefreshToken(userId: string): Promise<void> {
 		await this.userRepo.update(userId, { currentHashedRefreshToken: '' });
 	}
 

@@ -14,9 +14,7 @@ export class UsersController {
 	@ApiResponse({ status: 200, description: 'User deleted successfully' })
 	@ApiResponse({ status: 401, description: 'Unauthorized – missing or invalid JWT' })
 	@ApiResponse({ status: 404, description: 'User not found' })
-	async deleteMe(@GetUser() user: UserRequest): Promise<{
-		message: string;
-	}> {
+	async deleteMe(@GetUser() user: UserRequest): Promise<{ message: string }> {
 		await this.usersService.deleteUser(user.id);
 		return { message: 'User deleted successfully' };
 	}

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { Image } from 'src/image/entities/image.entity';
+import { Image } from 'src/images/entities/image.entity';
 
 @Entity()
 export class Comment {
@@ -10,10 +10,10 @@ export class Comment {
 	@Column('text')
 	text: string;
 
-	@ManyToOne(() => User, u => u.comments, { onDelete: 'SET NULL' })
+	@ManyToOne(() => User, user => user.comments, { onDelete: 'SET NULL' })
 	author: User;
 
-	@ManyToOne(() => Image, i => i.comments, { onDelete: 'CASCADE' })
+	@ManyToOne(() => Image, image => image.comments, { onDelete: 'CASCADE' })
 	image: Image;
 
 	@CreateDateColumn()

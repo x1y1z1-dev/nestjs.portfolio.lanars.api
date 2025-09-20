@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Comment } from 'src/comment/entities/comment.entity';
-import { Image } from 'src/image/entities/image.entity';
+import { Comment } from 'src/comments/entities/comments.entity';
+import { Image } from 'src/images/entities/image.entity';
 import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class CommentsService {
 		@InjectRepository(Comment) private repo: Repository<Comment>,
 		@InjectRepository(Image) private imageRepo: Repository<Image>,
 		@InjectRepository(User) private userRepo: Repository<User>,
-	) {}
+	) { }
 
 	async create(imageId: string, userId: string, text: string) {
 		const image = await this.imageRepo.findOne({ where: { id: imageId } });
@@ -25,6 +25,6 @@ export class CommentsService {
 		const c = await this.repo.findOne({ where: { id }, relations: ['author'] });
 		if (!c) throw new NotFoundException('Comment not found');
 		if (!c.author || c.author.id !== userId) throw new Error('Forbidden');
-		await this.repo.remove(c);
+		// await this.repo.remove(c);
 	}
 }

@@ -1,11 +1,11 @@
 import { Controller, Post, Body, Param, UseGuards, Request, Delete } from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { CommentsService } from './comment.service';
+import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('images')
 export class CommentsController {
-	constructor(private service: CommentsService) {}
+	constructor(private service: CommentsService) { }
 
 	@UseGuards(JwtAuthGuard)
 	@Post(':id/comments')

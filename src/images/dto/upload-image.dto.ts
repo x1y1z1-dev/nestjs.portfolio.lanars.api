@@ -1,18 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MaxLength } from 'class-validator';
 
-export class CreatePortfolioDto {
+export class UploadImageDto {
 	@ApiProperty({
-		example: 'My Portfolio',
-		description: 'Portfolio name',
+		example: 'My cool portfolio image',
+		description: 'Portfolio image name',
 	})
 	@IsString()
 	@MaxLength(100)
 	name: string;
 
 	@ApiProperty({
-		example: 'This is my personal portfolio showcasing my projects.',
-		description: 'Portfolio description',
+		example: 'My cool portfolio description',
+		description: 'Portfolio image description',
 	})
 	@IsString()
 	@MaxLength(1000)

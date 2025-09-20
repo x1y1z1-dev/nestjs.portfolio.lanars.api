@@ -8,7 +8,7 @@ import { GetUser } from 'src/common/decorators/get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
-	constructor(private authService: AuthService) {}
+	constructor(private authService: AuthService) { }
 
 	@Post('signup')
 	@ApiResponse({ status: 201, description: 'Return an object with message and access_token fields' })
@@ -62,3 +62,5 @@ export class AuthController {
 		return { message: 'Logged out successfully' };
 	}
 }
+
+//TODO: return data swagger

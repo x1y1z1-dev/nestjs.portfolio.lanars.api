@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
 import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-import { Comment } from 'src/comment/entities/comment.entity';
-import { Image } from 'src/image/entities/image.entity';
+import { Comment } from 'src/comments/entities/comments.entity';
+import { Image } from 'src/images/entities/image.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()
