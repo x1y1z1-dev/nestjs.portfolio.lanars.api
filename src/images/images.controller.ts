@@ -6,24 +6,17 @@ import {
 	UseInterceptors,
 	UploadedFile,
 	Body,
-	Request,
 	Delete,
-	Get,
-	Query,
 	ParseFilePipe,
 	MaxFileSizeValidator,
-	FileTypeValidator,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { ImagesService } from './images.service';
-import { UploadImageDto } from './dto/upload-image.dto';
-import { extname } from 'path';
 import { ConfigService } from '@nestjs/config';
 import type { UserRequest } from 'src/common/types/general.type';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiResponse } from '@nestjs/swagger';
 
 @Controller('images')
 export class ImagesController {
@@ -33,47 +26,57 @@ export class ImagesController {
 	) { }
 
 	@ApiConsumes('multipart/form-data')
-	// @UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	@Post(':id')
 	@ApiBody({
 		description: 'Upload an image file (jpg, jpeg, png) max 5MB',
-		type: 'multipart/form-data',
+		schema: {
+			type: 'object',
+			properties: {
+				name: { type: 'string', description: 'Image name', maxLength: 100 },
+				description: { type: 'string', description: 'Optional description' },
+				image: { type: 'string', format: 'binary', description: 'JPEG or PNG image file' },
+			},
+			required: ['image', 'name'],
+		},
 	})
+	@ApiResponse({ status: 201, description: 'The file has been successfully uploaded.' })
+	@ApiResponse({ status: 401, description: 'Invalid credentials' })
+	@ApiResponse({ status: 403, description: 'Not allowed to upload to this portfolio' })
 	@UseInterceptors(FileInterceptor('image'))
 	async uploadImage(
 		@Param('id') id: string,
 		@UploadedFile(
 			new ParseFilePipe({
 				validators: [
-					new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // макс 5MB
-					new FileTypeValidator({ fileType: /image\/jpeg/i }),
+					new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
+					// new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it
 				],
 			}),
 		)
 		file: Express.Multer.File,
-		// @Body() dto: UploadImageDto,
-		// @GetUser() user: UserRequest,
-	) {
-		console.log(id);
-		console.log(file);
-		// console.log(dto);
-		// console.log(user);
-		// 	const res = await this.service.upload(id, file.filename, dto, user.id);
-		// 	return res;
+		@Body('name') name: string,
+		@Body('description') description: string,
+		@GetUser() user: UserRequest,
+	): Promise<{ message: string }> {
+		console.log(id, file.filename, name, description, user.id);
+		await this.service.upload(id, file.filename, name, description, user.id);
+
+		return {
+			message: 'The file has been successfully uploaded.',
+		};
 	}
 
-	// @UseGuards(JwtAuthGuard)
-	// @Delete('/images/:id')
-	// async deleteImage(@Param('id') id: string, @GetUser() user: UserRequest,) {
-	// 	await this.service.delete(id, req.user.userId);
-	// 	return { message: 'Deleted' };
-	// }
-
-	// @Get('/images/feed')
-	// async feed(@Query('page') page = '1', @Query('limit') limit = '20') {
-	// 	const p = parseInt(page, 10) || 1;
-	// 	const l = parseInt(limit, 10) || 20;
-	// 	return this.service.feed(p, l);
-	// }
+	@UseGuards(JwtAuthGuard)
+	@Delete('/:id')
+	@ApiResponse({ status: 200, description: 'Deleted' })
+	@ApiResponse({ status: 403, description: 'Not allowed' })
+	@ApiResponse({ status: 404, description: 'Image not found' })
+	async deleteImage(@Param('id') id: string, @GetUser() user: UserRequest): Promise<{ message: string }> {
+		await this.service.delete(id, user.id);
+		return { message: 'Deleted' };
+	}
 }
 
+//TODO: check new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it
+//TODO: image DTO fix

@@ -17,4 +17,5 @@ export class UploadImageDto {
 	@IsString()
 	@MaxLength(1000)
 	description: string;
+
 }

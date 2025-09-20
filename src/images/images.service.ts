@@ -7,6 +7,7 @@ import { User } from 'src/users/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
 import { DiskConfig, DiskConfigName } from 'src/configs/disk.config';
 import { extname, resolve } from 'path';
+import { unlink } from 'fs/promises';
 
 @Injectable()
 export class ImagesService {
@@ -30,30 +31,47 @@ export class ImagesService {
 
 		return `${name}_${uniqueSuffix}${ext}`;
 	}
-	// async upload(portfolioId: string, filename: string, dto: any, userId: string) {
-	// 	const p = await this.portfolioRepo.findOne({ where: { id: portfolioId }, relations: ['owner'] });
-	// 	if (!p) throw new NotFoundException('Portfolio not found');
-	// 	// only owner can upload
-	// 	if (p.owner.id !== userId) throw new ForbiddenException('Not allowed to upload to this portfolio');
-	// 	const user = await this.userRepo.findOne({ where: { id: userId } });
-	// 	// const img = this.repo.create({ name: dto.name, description: dto.description, filePath: filename, portfolio: p, uploader: user });
-	// 	// return this.repo.save(img);
-	// }
+	async upload(portfolioId: string, filename: string, name: string, description: string, userId: string) {
+		console.log(portfolioId);
+		const portfolio = await this.portfolioRepo.findOne({ where: { id: portfolioId }, relations: ['owner'] });
+		console.log(1234);
 
-	// async delete(id: string, userId: string) {
-	// 	const img = await this.repo.findOne({ where: { id }, relations: ['uploader'] });
-	// 	if (!img) throw new NotFoundException('Image not found');
-	// 	if (!img.uploader || img.uploader.id !== userId) throw new ForbiddenException('Not allowed');
-	// 	await this.repo.remove(img);
-	// }
+		if (!portfolio) throw new NotFoundException('Portfolio not found');
 
-	// async feed(page = 1, limit = 20) {
-	// 	const [items, total] = await this.repo.findAndCount({
-	// 		relations: ['portfolio'],
-	// 		order: { createdAt: 'DESC' },
-	// 		skip: (page - 1) * limit,
-	// 		take: limit,
-	// 	});
-	// 	return { items, total };
-	// }
+		if (portfolio.owner.id !== userId) throw new ForbiddenException('Not allowed to upload to this portfolio');
+
+		const user = await this.userRepo.findOne({ where: { id: userId } });
+
+		if (!user) throw new NotFoundException('User not found');
+
+		const img = this.repo.create({
+			name: name,
+			description: description,
+			filePath: filename,
+			portfolio: portfolio,
+			uploader: user,
+		});
+
+		return this.repo.save(img);
+	}
+
+	async delete(id: string, userId: string) {
+		const img = await this.repo.findOne({ where: { id }, relations: ['uploader'] });
+
+		if (!img) throw new NotFoundException('Image not found');
+
+		if (!img.uploader || img.uploader.id !== userId) throw new ForbiddenException('Not allowed');
+
+		const filePath = resolve(this.getDiskPath(), img.filePath);
+
+		try {
+			await unlink(filePath);
+			console.log(`File deleted: ${filePath}`);
+		} catch (error: any) {
+			const message = error instanceof Error ? error.message : String(error);
+			console.warn(`File not found or cannot be deleted: ${filePath}`, message);
+		}
+
+		await this.repo.remove(img);
+	}
 }

@@ -9,6 +9,9 @@ import { PortfoliosModule } from './portfolios/portfolios.module';
 import { ImagesModule } from './images/images.module';
 import diskConfig from './configs/disk.config';
 import serverConfig from './configs/server.config';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
 	imports: [
@@ -31,11 +34,15 @@ import serverConfig from './configs/server.config';
 			}),
 			inject: [ConfigService],
 		}),
+		ServeStaticModule.forRoot({
+			rootPath: join(__dirname, '..', 'uploads'),
+			serveRoot: '/client',
+		}),
 		AuthModule,
 		UsersModule,
 		PortfoliosModule,
 		ImagesModule,
-		// CommentModule,
+		CommentsModule,
 	],
 	providers: [AppService],
 	controllers: [AppController],
