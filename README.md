@@ -5,15 +5,14 @@ A portfolio project API built with NestJS framework.
 ## Quick start:
 
 1. Clone repo into a folder
-2. Navigate to the folder and run:
+2. Copy`.env`from`.env.example`and set creds
+3. Navigate to the folder and run:
 
 ```bash
 `npm install`
 ```
 
 or use `docker-compose up -d --build` to build and run docker containers.
-
-3. Copy`.env`from`.env.example`and set creds
 4. Build migrations:`npm run migration:run`(or use TypeORM CLI) 
 5.`npm run start:dev`
 6. Open`http://localhost:3000/doc`- swagger documentation API
