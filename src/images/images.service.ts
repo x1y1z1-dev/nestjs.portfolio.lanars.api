@@ -8,12 +8,13 @@ import { ConfigService } from '@nestjs/config';
 import { join, resolve } from 'path';
 import { unlink } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
-import { DiskConfig, DiskConfigName } from 'src/configs/disk.config';
+import { DiskConfig, DiskConfigName } from '../configs/disk.config';
+import { AppLogger } from '../common/logger/logger.service';
+import { UploadImageDto } from './dto/upload-image.dto';
 
 export interface UploadImageParams {
 	portfolioId: string;
-	name: string;
-	description?: string;
+	dto: UploadImageDto;
 	userId: string;
 }
 
@@ -21,6 +22,7 @@ export interface UploadImageParams {
 export class ImagesService {
 	constructor(
 		private readonly configService: ConfigService,
+		private readonly logger: AppLogger,
 		@InjectRepository(Image) private repo: Repository<Image>,
 		@InjectRepository(Portfolio) private portfolioRepo: Repository<Portfolio>,
 		@InjectRepository(User) private userRepo: Repository<User>,
@@ -53,15 +55,15 @@ export class ImagesService {
 
 		if (!user) throw new NotFoundException('User not found');
 
-		const img = this.repo.create({
-			name: params.name,
-			description: params.description,
+		const image = this.repo.create({
+			name: params.dto.name,
+			description: params.dto.description,
 			filePath: file.filename,
 			portfolio: portfolio,
 			uploader: user,
 		});
 
-		await this.repo.save(img);
+		await this.repo.save(image);
 	}
 
 	async delete(imageId: string, userId: string): Promise<void> {
@@ -75,7 +77,8 @@ export class ImagesService {
 
 		try {
 			await unlink(filePath);
-		} catch {
+		} catch (error) {
+			this.logger.error('File not found or cannot be deleted:', error);
 			throw new ForbiddenException('File not found or cannot be deleted');
 		}
 

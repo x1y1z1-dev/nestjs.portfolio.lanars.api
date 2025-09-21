@@ -23,7 +23,7 @@ export class SignupDto {
 		example: 'John Doe',
 	})
 	@IsString()
-	@MinLength(3, { message: 'The name must be at least 3 characters long.' })
+	@MinLength(6, { message: 'The name must be at least 6 characters long.' })
 	@MaxLength(20, { message: 'The name must be no longer than 20 characters' })
 	name: string;
 }

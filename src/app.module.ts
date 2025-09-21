@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -13,6 +13,7 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CommentsModule } from './comments/comments.module';
 import { typeOrmConfig } from './configs/typeorm.config';
+import { LoggerModule } from './common/logger/logger.module';
 
 @Module({
 	imports: [
@@ -25,6 +26,7 @@ import { typeOrmConfig } from './configs/typeorm.config';
 			rootPath: join(__dirname, '..', 'uploads'),
 			serveRoot: '/client',
 		}),
+		LoggerModule,
 		AuthModule,
 		UsersModule,
 		PortfoliosModule,

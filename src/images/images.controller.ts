@@ -15,6 +15,7 @@ import { ImagesService } from './images.service';
 import type { UserRequest } from '../common/types/general.type';
 import { GetUser } from '../common/decorators/get-user.decorator';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiResponse } from '@nestjs/swagger';
+import { UploadImageDto } from './dto/upload-image.dto';
 
 @Controller('images')
 export class ImagesController {
@@ -44,16 +45,14 @@ export class ImagesController {
 	async uploadImage(
 		@Param('portfolioId') portfolioId: string,
 		@UploadedFile() file: Express.Multer.File,
-		@Body('name') name: string,
-		@Body('description') description: string,
+		@Body() dto: UploadImageDto,
 		@GetUser() user: UserRequest,
 	): Promise<{ message: string; filePath?: string }> {
 		if (!file) throw new BadRequestException('No file uploaded');
 
 		await this.imagesService.upload(file, {
 			portfolioId,
-			name,
-			description,
+			dto,
 			userId: user.id,
 		});
 

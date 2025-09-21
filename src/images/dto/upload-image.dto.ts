@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MaxLength } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UploadImageDto {
 	@ApiProperty({
@@ -7,6 +7,7 @@ export class UploadImageDto {
 		description: 'Portfolio image name',
 	})
 	@IsString()
+	@MinLength(6)
 	@MaxLength(100)
 	name: string;
 
@@ -15,6 +16,7 @@ export class UploadImageDto {
 		description: 'Portfolio image description',
 	})
 	@IsString()
+	@MinLength(10)
 	@MaxLength(1000)
 	description: string;
 }
