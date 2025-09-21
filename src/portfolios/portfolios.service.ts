@@ -25,7 +25,7 @@ export class PortfoliosService {
 	async findByUserId(userId: string, query: PaginationDto): Promise<PaginatedResult<Portfolio>> {
 		const [items, total] = await this.repo.findAndCount({
 			where: { owner: { id: userId } },
-			relations: ['owner', 'images', 'comments'],
+			relations: ['owner', 'images', 'images.comments'],
 			skip: (query.page - 1) * query.limit,
 			take: query.limit,
 			order: { createdAt: 'DESC' },
@@ -42,7 +42,7 @@ export class PortfoliosService {
 
 	async findAll(query: PaginationDto): Promise<PaginatedResult<Portfolio>> {
 		const [items, total] = await this.repo.findAndCount({
-			relations: ['owner', 'images', 'comments'],
+			relations: ['owner', 'images', 'images.comments'],
 			skip: (query.page - 1) * query.limit,
 			take: query.limit,
 			order: { createdAt: 'DESC' },
@@ -60,7 +60,7 @@ export class PortfoliosService {
 	async findByPortfolioId(portfolioId: string): Promise<Portfolio> {
 		const portfolio = await this.repo.findOne({
 			where: { id: portfolioId },
-			relations: ['owner', 'images', 'comments'],
+			relations: ['owner', 'images', 'images.comments'],
 		});
 
 		if (!portfolio) {

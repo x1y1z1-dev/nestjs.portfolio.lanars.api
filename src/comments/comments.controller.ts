@@ -11,7 +11,7 @@ export class CommentsController {
 	constructor(private service: CommentsService) { }
 
 	@UseGuards(JwtAuthGuard)
-	@Post('/:imageId')
+	@Post('create/:imageId')
 	@ApiBearerAuth()
 	@ApiResponse({ status: 201, description: 'Comment response' })
 	@ApiResponse({ status: 404, description: 'Image not found' })
@@ -20,7 +20,7 @@ export class CommentsController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Delete('/:commentId')
+	@Delete('delete/:commentId')
 	@ApiBearerAuth()
 	@ApiResponse({ status: 200, description: 'Comment Deleted' })
 	@ApiResponse({ status: 403, description: 'Not allowed' })

@@ -13,7 +13,7 @@ export class CommentsService {
 		@InjectRepository(User) private userRepo: Repository<User>,
 	) { }
 
-	async create(imageId: string, userId: string, text: string) {
+	async create(imageId: string, userId: string, text: string): Promise<Comment> {
 		const image = await this.imageRepo.findOne({ where: { id: imageId } });
 
 		if (!image) throw new NotFoundException('Image not found');
@@ -26,12 +26,12 @@ export class CommentsService {
 		return this.repo.save(comment);
 	}
 
-	async delete(commentId: string, userId: string) {
+	async delete(commentId: string, userId: string): Promise<void> {
 		const comment = await this.repo.findOne({ where: { id: commentId }, relations: ['author'] });
 
 		if (!comment) throw new NotFoundException('Comment not found');
 		if (!comment.author || comment.author.id !== userId) throw new ForbiddenException('Not allowed');
 
-		return await this.repo.remove(comment);
+		await this.repo.remove(comment);
 	}
 }

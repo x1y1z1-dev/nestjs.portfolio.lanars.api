@@ -62,7 +62,7 @@ export class ImagesService {
 		return this.repo.save(img);
 	}
 
-	async delete(imageId: string, userId: string) {
+	async delete(imageId: string, userId: string): Promise<void> {
 		const img = await this.repo.findOne({ where: { id: imageId }, relations: ['uploader'] });
 
 		if (!img) throw new NotFoundException('Image not found');

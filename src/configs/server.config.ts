@@ -7,8 +7,8 @@ export interface ServerConfig {
 	port: number;
 }
 
-//TODO: add logDirectory: process.env.LOG_DIR,
 export default registerAs(ServerConfigName, () => ({
 	appEnv: process.env.APP_ENV,
 	port: parseInt(process.env.PORT || '3000'),
+	logsPath: process.env.LOG_DIR,
 }));
