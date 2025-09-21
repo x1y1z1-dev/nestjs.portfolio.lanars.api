@@ -13,6 +13,7 @@ A portfolio project API built with NestJS framework.
 ```
 
 or use `docker-compose up -d --build` to build and run docker containers.
+
 4. Build migrations:`npm run migration:run`(or use TypeORM CLI) 
 5.`npm run start:dev`
 6. Open`http://localhost:3000/doc`- swagger documentation API
