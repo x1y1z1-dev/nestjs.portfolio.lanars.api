@@ -1,0 +1,477 @@
+{
+  "v": 10,
+  "name": "nestjs.portfolio.lanars.api",
+  "folders": [
+    {
+      "v": 10,
+      "name": "Auth",
+      "folders": [],
+      "requests": [
+        {
+          "v": "15",
+          "name": "signup",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/auth/signup",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "export {};\npw.env.set(\"access_token\", pw.response.body.access_token);\r\npw.env.set(\"refresh_token\", pw.response.body.refresh_token);",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"tester@gmail.com\",\n  \"password\": \"Amha_0000\",\n  \"name\": \"Amhanter\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "login",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/auth/login",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "export {};\npw.env.set(\"access_token\", pw.response.body.access_token);",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"tester@gmail.com\",\n  \"password\": \"Amha_0000\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "refresh-token",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/auth/refresh-token",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "export {};\npw.env.set(\"access_token\", pw.response.body.access_token);",
+          "auth": {
+            "authType": "jwt",
+            "secret": "",
+            "privateKey": "",
+            "algorithm": "HS256",
+            "payload": "{}",
+            "addTo": "HEADERS",
+            "isSecretBase64Encoded": false,
+            "headerPrefix": "Bearer ",
+            "paramName": "token",
+            "jwtHeaders": "{}",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"refresh_token\": \"<<refresh_token>>\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "logout",
+          "method": "DELETE",
+          "endpoint": "<<base_servcer_url>>/auth/logout",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "export {};\n",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "_ref_id": "coll_mfr2myfb_5941c318-6027-48ca-aa36-63b366c11cd4"
+    },
+    {
+      "v": 10,
+      "name": "User",
+      "folders": [],
+      "requests": [
+        {
+          "v": "15",
+          "name": "delete",
+          "method": "DELETE",
+          "endpoint": "<<base_servcer_url>>/users/delete",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "export {};\n",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "_ref_id": "coll_mfrabt2w_07729ebf-488b-4cba-99b7-b4557fd45097"
+    },
+    {
+      "v": 10,
+      "name": "Portfolio",
+      "folders": [],
+      "requests": [
+        {
+          "v": "15",
+          "name": "get-list",
+          "method": "GET",
+          "endpoint": "<<base_servcer_url>>/portfolios/get-list",
+          "params": [
+            {
+              "key": "page",
+              "value": "1",
+              "active": true,
+              "description": ""
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "create",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/portfolios/create",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Test Portfolio 4\",\n  \"description\": \"Portfolio 4. See all photo\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "delete",
+          "method": "DELETE",
+          "endpoint": "<<base_servcer_url>>/portfolios/delete/cd4ec6d6-139d-4f9e-938f-4f33179625af",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "user-list",
+          "method": "GET",
+          "endpoint": "<<base_servcer_url>>/portfolios/user-list/4b923860-7508-4911-a93a-26ddf369539d",
+          "params": [
+            {
+              "key": "page",
+              "value": "1",
+              "active": true,
+              "description": ""
+            },
+            {
+              "key": "limit",
+              "value": "3",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "get portfolio",
+          "method": "GET",
+          "endpoint": "<<base_servcer_url>>/portfolios/327c28d9-dd06-4588-a34b-3284cc411cd4",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "_ref_id": "coll_mfrt2bn3_a5086f1c-3dfb-49cf-a38a-d9f547f2ac8a"
+    },
+    {
+      "v": 10,
+      "name": "Images",
+      "folders": [],
+      "requests": [
+        {
+          "v": "15",
+          "name": "create",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/images/upload/3c5633da-3ecb-4f7a-ad2a-4dad83709a15",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "multipart/form-data",
+            "body": [
+              {
+                "key": "image",
+                "active": true,
+                "contentType": "",
+                "isFile": false,
+                "value": ""
+              },
+              {
+                "key": "name",
+                "active": true,
+                "isFile": false,
+                "value": "Image name tesad asd asd asddas das das das r342 dsadas"
+              },
+              {
+                "key": "description",
+                "active": true,
+                "isFile": false,
+                "value": "image description  das dasd32das das das"
+              }
+            ],
+            "showIndividualContentType": false,
+            "isBulkEditing": false
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "delete",
+          "method": "DELETE",
+          "endpoint": "<<base_servcer_url>>/images/delete/bdda5a78-0f16-41c0-8a56-ae523acfb960",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "_ref_id": "coll_mfrv4e7j_58ebca71-8270-4f61-afe8-519fbac2822e"
+    },
+    {
+      "v": 10,
+      "name": "comments",
+      "folders": [],
+      "requests": [
+        {
+          "v": "15",
+          "name": "create",
+          "method": "POST",
+          "endpoint": "<<base_servcer_url>>/comments/create/3c5633da-3ecb-4f7a-ad2a-4dad83709a15",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"text\": \"test saf das dasl;d jsdjkgh aksljdfh aslkdfbsdalkjfblsandkjf nasmd;f\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "delete",
+          "method": "DELETE",
+          "endpoint": "<<base_servcer_url>>/comments/delete/dd923b27-1cb5-4e0f-8cf2-c447dd05247c",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "_ref_id": "coll_mfrv4huv_effd0e60-61cd-4e93-b48b-fced7f7211b6"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "variables": [],
+  "_ref_id": "coll_mfqtit7o_40d9aaad-2704-4826-8c13-0ed6cf65adcd"
+}

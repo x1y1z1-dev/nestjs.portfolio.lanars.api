@@ -11,11 +11,13 @@ A portfolio project API built with NestJS framework.
 `npm install`
 ```
 
-3. Create `.env` from `.env.example` and set creds
-4. Build migrations: `npm run migration:run` (or use TypeORM CLI)
-5. `npm run start:dev`
-6. Open `http://localhost:3000/doc`- swagger documentation API
-7. Use Postman or similar tool to test API and open `http://localhost:3000/api`
+or use `docker-compose up -d --build` to build and run docker containers.
+
+3. Create`.env`from`.env.example`and set creds
+4. Build migrations:`npm run migration:run`(or use TypeORM CLI) 5.`npm run start:dev`
+5. Open`http://localhost:3000/doc`- swagger documentation API
+6. Use Postman or similar tool to test API and open `http://localhost:3000/api/`
+7. use`https://hoppscotch.io/` and import `nestjs.portfolio.lanars.api.json` configs from root folder to test API
 
 ## Features
 
