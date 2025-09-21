@@ -5,13 +5,13 @@ import { Image } from '../images/entities/image.entity';
 import { Portfolio } from '../portfolios/entities/portfolio.entity';
 import { User } from '../users/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { DiskConfig, DiskConfigName } from '../configs/disk.config';
-import { extname, resolve } from 'path';
+import { join, resolve } from 'path';
 import { unlink } from 'fs/promises';
+import { existsSync, mkdirSync } from 'fs';
+import { DiskConfig, DiskConfigName } from 'src/configs/disk.config';
 
 export interface UploadImageParams {
 	portfolioId: string;
-	filename: string;
 	name: string;
 	description?: string;
 	userId: string;
@@ -27,20 +27,22 @@ export class ImagesService {
 	) { }
 
 	getDiskPath(): string {
-		const diskConfig = this.configService.getOrThrow<DiskConfig>(DiskConfigName);
-
-		return resolve(__dirname, '../..', diskConfig.path);
+		const diskConfig = this.configService.get<DiskConfig>(DiskConfigName)!;
+		const uploadPath = join(process.cwd(), diskConfig.path);
+		if (!existsSync(uploadPath)) {
+			mkdirSync(uploadPath, { recursive: true });
+		}
+		return uploadPath;
 	}
 
 	getFileName(file: Express.Multer.File): string {
-		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-		const ext = extname(file.originalname).toLowerCase();
-		const name = file.originalname.replace(/\s/g, '-').replace(ext, '');
-
-		return `${name}_${uniqueSuffix}${ext}`;
+		const timestamp = Date.now();
+		const originalName = file.originalname.replace(/\s+/g, '_');
+		const ext = originalName.split('.').pop();
+		return `${timestamp}.${ext}`;
 	}
 
-	async upload(params: UploadImageParams): Promise<Image> {
+	async upload(file: Express.Multer.File, params: UploadImageParams): Promise<void> {
 		const portfolio = await this.portfolioRepo.findOne({ where: { id: params.portfolioId }, relations: ['owner'] });
 
 		if (!portfolio) throw new NotFoundException('Portfolio not found');
@@ -54,12 +56,12 @@ export class ImagesService {
 		const img = this.repo.create({
 			name: params.name,
 			description: params.description,
-			filePath: params.filename,
+			filePath: file.filename,
 			portfolio: portfolio,
 			uploader: user,
 		});
 
-		return this.repo.save(img);
+		await this.repo.save(img);
 	}
 
 	async delete(imageId: string, userId: string): Promise<void> {

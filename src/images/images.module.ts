@@ -18,7 +18,7 @@ import { MulterModule } from '@nestjs/platform-express';
 			useClass: ImageDiskFactory,
 		}),
 	],
-	providers: [ImagesService],
+	providers: [ImagesService, ImageDiskFactory],
 	controllers: [ImagesController],
 	exports: [ImagesService],
 })
