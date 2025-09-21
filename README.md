@@ -26,6 +26,7 @@ or use `docker-compose up -d --build` to build and run docker containers.
 - Commenting system for images
 - Pagination for images and comments
 - Input validation and error handling
+- Test Added
 
 ## Technologies Used
 
