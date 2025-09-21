@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
-import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-import { User } from 'src/users/entities/user.entity';
-import { Comment } from 'src/comments/entities/comments.entity';
+import { Portfolio } from '../../portfolios/entities/portfolio.entity';
+import { User } from '../../users/entities/user.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 
 @Entity()
 export class Image {
@@ -11,7 +11,7 @@ export class Image {
 	@Column()
 	name: string;
 
-	@Column({ nullable: true, type: 'text' })
+	@Column({ type: 'text' })
 	description: string;
 
 	@Column()

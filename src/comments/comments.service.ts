@@ -1,9 +1,9 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Comment } from 'src/comments/entities/comments.entity';
-import { Image } from 'src/images/entities/image.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Comment } from '../comments/entities/comment.entity';
+import { Image } from '../images/entities/image.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class CommentsService {

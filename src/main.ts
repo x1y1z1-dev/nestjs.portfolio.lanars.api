@@ -59,3 +59,14 @@ bootstrap();
 
 //TODO: check new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it
 //TODO: image DTO fix
+////TODO:Rate limiter
+////TODO:check documentation secure topics
+
+//TODO: Use logical nesting on endpoints: https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/#h2-8ec448c6df8c0
+
+//TODO: check if the code is okay chatgpt
+////TODO: import { Image } from 'src/images/entities/image.entity';
+////TODO: import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
+////TODO: import { User } from 'src/users/entities/user.entity';
+////TODO: imports: [TypeOrmModule.forFeature([Image, Portfolio, User])],
+////TODO: new FileTypeValidator({ fileType: /(jpe?g|png)$/i }), need fix it

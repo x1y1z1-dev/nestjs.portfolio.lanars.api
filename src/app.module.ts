@@ -12,6 +12,7 @@ import serverConfig from './configs/server.config';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CommentsModule } from './comments/comments.module';
+import { typeOrmConfig } from './configs/typeorm.config';
 
 @Module({
 	imports: [
@@ -19,21 +20,7 @@ import { CommentsModule } from './comments/comments.module';
 			isGlobal: true,
 			load: [serverConfig, diskConfig],
 		}),
-		TypeOrmModule.forRootAsync({
-			imports: [ConfigModule],
-			useFactory: async (configService: ConfigService) => ({
-				type: 'postgres',
-				host: configService.get('DB_HOST'),
-				port: parseInt(configService.get('DB_PORT') || '5432'),
-				username: configService.get('DB_USER'),
-				password: configService.get('DB_PASS'),
-				database: configService.get('DB_NAME'),
-				entities: [__dirname + '/**/*.entity{.ts,.js}'],
-				autoLoadEntities: true,
-				synchronize: configService.get('APP_ENV') !== 'production',
-			}),
-			inject: [ConfigService],
-		}),
+		TypeOrmModule.forRootAsync(typeOrmConfig),
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, '..', 'uploads'),
 			serveRoot: '/client',

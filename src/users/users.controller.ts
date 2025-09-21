@@ -2,8 +2,8 @@ import { Controller, Delete, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { GetUser } from 'src/common/decorators/get-user.decorator';
-import type { UserRequest } from 'src/common/types/general.type';
+import { GetUser } from '../common/decorators/get-user.decorator';
+import type { UserRequest } from '../common/types/general.type';
 
 @Controller('users')
 export class UsersController {

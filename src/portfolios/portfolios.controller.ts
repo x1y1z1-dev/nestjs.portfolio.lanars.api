@@ -2,8 +2,8 @@ import { Controller, Post, Body, UseGuards, Get, Delete, Param, Query } from '@n
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { PortfoliosService } from './portfolios.service';
 import { CreatePortfolioDto } from './dto/create-portfolio.dto';
-import { GetUser } from 'src/common/decorators/get-user.decorator';
-import type { PaginatedResult, UserRequest } from 'src/common/types/general.type';
+import { GetUser } from '../common/decorators/get-user.decorator';
+import type { PaginatedResult, UserRequest } from '../common/types/general.type';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { PortfolioResponseDto } from './dto/response-portfolio.dto';
 import { Portfolio } from './entities/portfolio.entity';
@@ -24,21 +24,18 @@ export class PortfoliosController {
 		return await this.service.create(dto, user.id);
 	}
 
-	@UseGuards(JwtAuthGuard)
-	@Get('user-list')
-	@ApiBearerAuth()
+	@Get('user-list/:userId')
 	@ApiResponse({
 		status: 200,
-		description: 'Returns list of portfolios belonging to the authenticated user',
+		description: 'Returns list of portfolios belonging to the user',
 		type: PortfolioResponseDto,
 		isArray: true,
 	})
-	@ApiResponse({ status: 401, description: 'Unauthorized – missing or invalid JWT' })
 	async getUserListOfPortfolios(
-		@GetUser() user: UserRequest,
+		@Param('userId') userId: string,
 		@Query() query: PaginationDto,
 	): Promise<PaginatedResult<Portfolio>> {
-		return await this.service.findByUserId(user.id, query);
+		return await this.service.findByUserId(userId, query);
 	}
 
 	@Get('get-list')
@@ -50,6 +47,17 @@ export class PortfoliosController {
 	})
 	async getListOfPortfolios(@Query() query: PaginationDto): Promise<PaginatedResult<Portfolio>> {
 		return await this.service.findAll(query);
+	}
+
+	@Get(':portfolioId')
+	@ApiResponse({
+		status: 200,
+		description: 'Returns portfolio by ID',
+		type: PortfolioResponseDto,
+	})
+	@ApiResponse({ status: 404, description: 'Portfolio not found' })
+	async getPortfolioById(@Param('portfolioId') portfolioId: string): Promise<Portfolio> {
+		return await this.service.findByPortfolioId(portfolioId);
 	}
 
 	@UseGuards(JwtAuthGuard)

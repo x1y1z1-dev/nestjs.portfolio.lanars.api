@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
-import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-import { Comment } from 'src/comments/entities/comments.entity';
-import { Image } from 'src/images/entities/image.entity';
+import { Portfolio } from '../../portfolios/entities/portfolio.entity';
+import { Comment } from '../../comments/entities/comment.entity';
+import { Image } from '../../images/entities/image.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()
@@ -12,7 +12,7 @@ export class User {
 	@Column({ unique: true })
 	email: string;
 
-	@Column({ nullable: true })
+	@Column()
 	name: string;
 
 	@Exclude()

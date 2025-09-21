@@ -3,11 +3,11 @@ import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { ApiBearerAuth, ApiBody, ApiResponse } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { GetUser } from 'src/common/decorators/get-user.decorator';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { GetUser } from '../common/decorators/get-user.decorator';
 import { RefreshTokenResponseDto } from './dto/refresh_response.dto';
 import { LoginTokenResponseDto } from './dto/login_response.dto';
-import type { UserRequest } from 'src/common/types/general.type';
+import type { UserRequest } from '../common/types/general.type';
 
 @Controller('auth')
 export class AuthController {

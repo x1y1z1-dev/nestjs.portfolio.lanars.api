@@ -2,8 +2,8 @@ import { Controller, Post, Body, Param, UseGuards, Delete } from '@nestjs/common
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import type { UserRequest } from 'src/common/types/general.type';
-import { GetUser } from 'src/common/decorators/get-user.decorator';
+import type { UserRequest } from '../common/types/general.type';
+import { GetUser } from '../common/decorators/get-user.decorator';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 
 @Controller('comments')

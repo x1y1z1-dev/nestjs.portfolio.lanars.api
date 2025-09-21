@@ -33,6 +33,10 @@ A portfolio project API built with NestJS framework.
 - Multer (for file uploads)
 - Swagger (for API documentation)
 
+## DB
+
+![alt text](image.png)
+
 ## License
 
 This project is licensed under the MIT License.

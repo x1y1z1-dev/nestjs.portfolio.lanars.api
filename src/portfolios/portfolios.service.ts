@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Portfolio } from '../portfolios/entities/portfolio.entity';
+import { User } from '../users/entities/user.entity';
 import { CreatePortfolioDto } from './dto/create-portfolio.dto';
 import { PaginationDto } from './dto/pagination-portfolio.dto';
-import type { PaginatedResult } from 'src/common/types/general.type';
+import type { PaginatedResult } from '../common/types/general.type';
 
 @Injectable()
 export class PortfoliosService {
@@ -22,21 +22,10 @@ export class PortfoliosService {
 		return this.repo.save(portfolio);
 	}
 
-	// async findByUser(userId: string): Promise<Portfolio[] | []> {
-	// 	const res = await this.repo.find({
-	// 		where: { owner: { id: userId } },
-	// 		relations: ['images'],
-	// 		order: { createdAt: 'DESC' },
-	// 	});
-	// 	if (!res || res.length === 0) throw new NotFoundException('Portfolios not found');
-
-	// 	return res;
-	// }
-
 	async findByUserId(userId: string, query: PaginationDto): Promise<PaginatedResult<Portfolio>> {
 		const [items, total] = await this.repo.findAndCount({
-			where: { id: userId },
-			relations: ['owner', 'images'],
+			where: { owner: { id: userId } },
+			relations: ['owner', 'images', 'comments'],
 			skip: (query.page - 1) * query.limit,
 			take: query.limit,
 			order: { createdAt: 'DESC' },
@@ -53,7 +42,7 @@ export class PortfoliosService {
 
 	async findAll(query: PaginationDto): Promise<PaginatedResult<Portfolio>> {
 		const [items, total] = await this.repo.findAndCount({
-			relations: ['owner', 'images'],
+			relations: ['owner', 'images', 'comments'],
 			skip: (query.page - 1) * query.limit,
 			take: query.limit,
 			order: { createdAt: 'DESC' },
@@ -66,6 +55,19 @@ export class PortfoliosService {
 			limit: query.limit,
 			totalPages: Math.ceil(total / query.limit),
 		};
+	}
+
+	async findByPortfolioId(portfolioId: string): Promise<Portfolio> {
+		const portfolio = await this.repo.findOne({
+			where: { id: portfolioId },
+			relations: ['owner', 'images', 'comments'],
+		});
+
+		if (!portfolio) {
+			throw new NotFoundException('Portfolio not found');
+		}
+
+		return portfolio;
 	}
 
 	async delete(portfolioId: string, userId: string): Promise<void> {

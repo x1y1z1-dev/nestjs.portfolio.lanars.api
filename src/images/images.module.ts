@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Image } from 'src/images/entities/image.entity';
-import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Image } from '../images/entities/image.entity';
+import { Portfolio } from '../portfolios/entities/portfolio.entity';
+import { User } from '../users/entities/user.entity';
 import { ImagesService } from './images.service';
 import { ImagesController } from './images.controller';
 import { ImageDiskFactory } from './image.factory';
@@ -23,9 +23,3 @@ import { MulterModule } from '@nestjs/platform-express';
 	exports: [ImagesService],
 })
 export class ImagesModule { }
-
-//TODO: check if the code is okay chatgpt
-// import { Image } from 'src/images/entities/image.entity';
-// import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
-// import { User } from 'src/users/entities/user.entity';
-// imports: [TypeOrmModule.forFeature([Image, Portfolio, User])],
