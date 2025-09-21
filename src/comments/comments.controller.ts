@@ -6,12 +6,12 @@ import type { UserRequest } from '../common/types/general.type';
 import { GetUser } from '../common/decorators/get-user.decorator';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 
-@Controller('comments')
+@Controller('images')
 export class CommentsController {
 	constructor(private service: CommentsService) { }
 
 	@UseGuards(JwtAuthGuard)
-	@Post('create/:imageId')
+	@Post('/:imageId/comments')
 	@ApiBearerAuth()
 	@ApiResponse({ status: 201, description: 'Comment response' })
 	@ApiResponse({ status: 404, description: 'Image not found' })
@@ -20,7 +20,7 @@ export class CommentsController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Delete('delete/:commentId')
+	@Delete('/:commentId/comments')
 	@ApiBearerAuth()
 	@ApiResponse({ status: 200, description: 'Comment Deleted' })
 	@ApiResponse({ status: 403, description: 'Not allowed' })

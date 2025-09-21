@@ -143,6 +143,33 @@
           },
           "requestVariables": [],
           "responses": {}
+        },
+        {
+          "v": "15",
+          "name": "get",
+          "method": "GET",
+          "endpoint": "<<base_servcer_url>>/users/me",
+          "params": [],
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <<access_token>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "export {};\n",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
         }
       ],
       "auth": {
@@ -406,7 +433,7 @@
           "v": "15",
           "name": "create",
           "method": "POST",
-          "endpoint": "<<base_servcer_url>>/comments/create/3c5633da-3ecb-4f7a-ad2a-4dad83709a15",
+          "endpoint": "<<base_servcer_url>>/images/9c3966b1-0d96-4833-8670-fcff6fbbe171/comments",
           "params": [],
           "headers": [
             {
@@ -433,7 +460,7 @@
           "v": "15",
           "name": "delete",
           "method": "DELETE",
-          "endpoint": "<<base_servcer_url>>/comments/delete/dd923b27-1cb5-4e0f-8cf2-c447dd05247c",
+          "endpoint": "<<base_servcer_url>>/images/76108c52-ae92-40f4-8be6-614e78740ba9/comments",
           "params": [],
           "headers": [
             {

@@ -7,13 +7,17 @@ import { User } from '../users/entities/user.entity';
 export class UsersService {
 	constructor(@InjectRepository(User) private repo: Repository<User>) { }
 
-	async findById(iuserId: string): Promise<User | null> {
-		return await this.repo.findOne({ where: { id: iuserId } });
+	async findById(iuserId: string): Promise<User> {
+		const user = await this.repo.findOne({
+			where: { id: iuserId },
+			relations: ['portfolios', 'portfolios.images', 'portfolios.images.comments'],
+		});
+		if (!user) throw new NotFoundException('User not found');
+		return user;
 	}
 
 	async deleteUser(userId: string): Promise<void> {
 		const user = await this.findById(userId);
-		if (!user) throw new NotFoundException('User not found');
 		await this.repo.remove(user);
 	}
 }

@@ -14,7 +14,7 @@ export class PortfoliosController {
 	constructor(private service: PortfoliosService) { }
 
 	@UseGuards(JwtAuthGuard)
-	@Post('create')
+	@Post()
 	@ApiBearerAuth()
 	@ApiResponse({ status: 201, description: 'Portfolio was created successfully' })
 	@ApiResponse({ status: 400, description: 'Bad Request – invalid input data' })
@@ -61,7 +61,7 @@ export class PortfoliosController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Delete('delete/:portfolioId')
+	@Delete('/:portfolioId')
 	@ApiBearerAuth()
 	@ApiResponse({ status: 200, description: 'Portfolio was deleted successfully' })
 	@ApiResponse({ status: 401, description: 'Unauthorized - missing or invalid JWT' })
