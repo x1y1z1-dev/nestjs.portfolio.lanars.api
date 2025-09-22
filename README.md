@@ -12,7 +12,15 @@ A portfolio project API built with NestJS framework.
 `npm install`
 ```
 
-or use `docker-compose up -d --build` to build and run docker containers.
+or use 
+
+```bash
+# Builds, (re)creates, starts, and attaches to containers for a service in detached mode. Ommit -d if you don't want to run in detached mode.
+$ docker compose up -d
+
+# If you want to rebuild
+$ docker compose up -d --build
+```
 
 4. Build migrations:`npm run migration:run`(or use TypeORM CLI) 
 5.`npm run start:dev`
