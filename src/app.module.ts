@@ -14,12 +14,23 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { CommentsModule } from './comments/comments.module';
 import { typeOrmConfig } from './configs/typeorm.config';
 import { LoggerModule } from './common/logger/logger.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
 			load: [serverConfig, diskConfig],
+		}),
+		ThrottlerModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (config: ConfigService) => [
+				{
+					ttl: config.get('THROTTLE_TTL'),
+					limit: config.get('THROTTLE_LIMIT'),
+				},
+			],
 		}),
 		TypeOrmModule.forRootAsync(typeOrmConfig),
 		ServeStaticModule.forRoot({

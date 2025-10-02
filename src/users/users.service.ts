@@ -10,7 +10,7 @@ export class UsersService {
 	async findById(iuserId: string): Promise<User> {
 		const user = await this.repo.findOne({
 			where: { id: iuserId },
-			relations: ['portfolios', 'portfolios.images', 'portfolios.images.comments'],
+			relations: ['portfolios', 'portfolios.images'],
 		});
 		if (!user) throw new NotFoundException('User not found');
 		return user;

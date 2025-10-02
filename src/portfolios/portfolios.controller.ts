@@ -24,7 +24,7 @@ export class PortfoliosController {
 		return await this.service.create(dto, user.id);
 	}
 
-	@Get('user-list/:userId')
+	@Get('userlist/:userId')
 	@ApiResponse({
 		status: 200,
 		description: 'Returns list of portfolios belonging to the user',
@@ -38,7 +38,7 @@ export class PortfoliosController {
 		return await this.service.findByUserId(userId, query);
 	}
 
-	@Get('get-list')
+	@Get('list')
 	@ApiResponse({
 		status: 200,
 		description: 'Returns list of portfolios ',
@@ -57,7 +57,7 @@ export class PortfoliosController {
 	})
 	@ApiResponse({ status: 404, description: 'Portfolio not found' })
 	async getPortfolioById(@Param('portfolioId') portfolioId: string): Promise<Portfolio> {
-		return await this.service.findByPortfolioId(portfolioId);
+		return await this.service.findByPortfolioById(portfolioId);
 	}
 
 	@UseGuards(JwtAuthGuard)

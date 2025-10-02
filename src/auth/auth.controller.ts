@@ -72,7 +72,7 @@ export class AuthController {
 	@ApiBearerAuth()
 	@ApiResponse({ status: 200, description: 'Logged out successfully' })
 	@ApiResponse({ status: 404, description: 'User not found' })
-	async logout(@GetUser() @GetUser() user: UserRequest): Promise<{
+	async logout(@GetUser() user: UserRequest): Promise<{
 		message: string;
 	}> {
 		await this.authService.invalidateRefreshToken(user.id);

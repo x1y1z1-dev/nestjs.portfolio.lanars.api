@@ -187,9 +187,9 @@
       "requests": [
         {
           "v": "15",
-          "name": "get-list",
+          "name": "list",
           "method": "GET",
-          "endpoint": "<<base_servcer_url>>/portfolios/get-list",
+          "endpoint": "<<base_servcer_url>>/portfolios/list",
           "params": [
             {
               "key": "page",
@@ -274,9 +274,9 @@
         },
         {
           "v": "15",
-          "name": "user-list",
+          "name": "userlist",
           "method": "GET",
-          "endpoint": "<<base_servcer_url>>/portfolios/user-list/4b923860-7508-4911-a93a-26ddf369539d",
+          "endpoint": "<<base_servcer_url>>/portfolios/userlist/4b923860-7508-4911-a93a-26ddf369539d",
           "params": [
             {
               "key": "page",
